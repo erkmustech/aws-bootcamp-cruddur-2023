@@ -198,6 +198,8 @@
 [Napkin Design](https://lucid.app/lucidchart/6a933070-367a-4d8a-b66b-6ad2a98fe512/edit?viewport_loc=-435%2C-84%2C2863%2C1485%2C0_0&invitationId=inv_ac166ebb-5096-4142-b588-8b5608e8b0b5)
 
 [CI/CD piple line](https://lucid.app/lucidchart/2e0a440f-9342-46ea-b0b5-1e306a7a152d/edit?viewport_loc=-26%2C-102%2C2889%2C1498%2C0_0&invitationId=inv_c578b5ab-9304-40de-a6d3-9cbc3457a6a5)
+ 
+[AWS Architecting](https://lucid.app/lucidchart/75a58bbc-8dc0-406c-a572-3729f1f0ead8/edit?viewport_loc=-2047%2C-407%2C4813%2C2545%2C0_0&invitationId=inv_a5feadb8-637f-49c8-86fd-45019dbd55a3) 
 
  # 5.  The technical and service limits of specific services and how they could impact the technical path for technical flexibility.          
         
@@ -227,4 +229,10 @@
 
         It's important to regularly monitor your service limits to ensure that you don't hit any unexpected limits that may impact your system's functionality. If you anticipate the need for a service limit increase in the future, it's a good practice to request it in advance to avoid any potential downtime or service interruptions.
 
-        
+  # 7   C4 model  - >  Maps of your code
+
+  The C4 model for visualising software architecture
+            Context, Containers, Components, and Code
+    The C4 model was created as a way to help software development teams describe and communicate software architecture, both during up-front design sessions and when retrospectively documenting an existing codebase. It's a way to create maps of your code, at various levels of detail, in the same way you would use something like Google Maps to zoom in and out of an area you are interested in.
+
+    The C4 model is an "abstraction-first" approach to diagramming software architecture, based upon abstractions that reflect how software architects and developers think about and build software. The small set of abstractions and diagram types makes the C4 model easy to learn and use. Please note that you don't need to use all 4 levels of diagram; only those that add value - the System Context and Container diagrams are sufficient for many software development teams.      
