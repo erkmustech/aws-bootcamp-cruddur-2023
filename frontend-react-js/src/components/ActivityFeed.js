@@ -1,5 +1,7 @@
 import './ActivityFeed.css';
 import ActivityItem from './ActivityItem';
+import './ActivityFeed.css';
+import ActivityItem from './ActivityItem';
 
 export default function ActivityFeed(props) {
   return (
