@@ -13,22 +13,20 @@ Containerization is a way of packaging software code along with all its dependen
 
 ### As the appicaion backend was develped with Python we should run python 
    "python3 -m flask run --host=0.0.0.0 --port=4567"
-```sh
-cd backend-flask
-export FRONTEND_URL="*"
-export BACKEND_URL="*"
-python3 -m flask run --host=0.0.0.0 --port=4567
-cd ..
-```
+          ```sh
+          cd backend-flask
+          export FRONTEND_URL="*"
+          export BACKEND_URL="*"
+          python3 -m flask run --host=0.0.0.0 --port=4567
+          cd ..
+          ```
 - make sure to unlock the port on the port tab
 - open the link for 4567 in your browser
 - append to the url to `/api/activities/home`
 - you should get back json in browser and get response 200 in terminal
 
-
   
-  
-##  Create docker file for Backend.
+###  Create docker file for Backend.
   1. change diractory into the backend file and create a docker file name"Dockerfile" (don't forget to install docker extension, https://code.visualstudio.com/docs/containers/overview)
   2. The docker file include the image that we gonna use . for this we go to docker hub and find related images that we need. 
           1. source -> mainly docker hub 
@@ -55,16 +53,7 @@ ENV FLASK_ENV=development
 EXPOSE ${PORT}
 CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0", "--port=4567"] 
 ```
-  for Node:
- ```dockerfile
-FROM node:17.11- alpine
-WORKDIR /backend-node
-ENT  PATH ="./backend/.bin:$PATH
-COPY ..
-RUN npm run build
-CMD [ "npm", "start"] 
-`` 
-  
+
 
 ### Build Container 
   after created docker file we build docker container with "docker build --tag <tag name> ."  command
@@ -73,7 +62,7 @@ CMD [ "npm", "start"]
 docker build -t  backend-flask ./backend-flask
 ```
 
-### Now wer run the container with 
+### Now we run the container with 
 
 Run 
 ```sh
@@ -81,8 +70,9 @@ docker run --rm -p 4567:4567 -it backend-flask
 FRONTEND_URL="*" BACKEND_URL="*" docker run --rm -p 4567:4567 -it backend-flask
 export FRONTEND_URL="*"
 export BACKEND_URL="*"
-docker run --rm -p 4567:4567 -it -e FRONTEND_URL='*' -e BACKEND_URL='*' backend-flask
 docker run --rm -p 4567:4567 -it  -e FRONTEND_URL -e BACKEND_URL backend-flask
+// combined version
+docker run --rm -p 4567:4567 -it -e FRONTEND_URL='*' -e BACKEND_URL='*' backend-flask
 unset FRONTEND_URL="*"
 unset BACKEND_URL="*"
 ```
@@ -92,7 +82,7 @@ Run in background
 docker container run --rm -p 4567:4567 -d backend-flask
 ```
 
-Return the container id into an Env Vat
+Return the container id into an Env Var
 ```sh
 CONTAINER_ID=$(docker run --rm -p 4567:4567 -d backend-flask)
 ```
@@ -100,9 +90,9 @@ CONTAINER_ID=$(docker run --rm -p 4567:4567 -d backend-flask)
 > docker container run is idiomatic, docker run is legacy syntax but is commonly used.
 
 ### Get Container Images or Running Container Ids
-
 ```
 docker ps
+docker ps -a  // include non active servers
 docker images
 ```
 
@@ -116,7 +106,9 @@ curl -X GET http://localhost:4567/api/activities/home -H "Accept: application/js
 ### Check Container Logs
 
 ```sh
-docker logs CONTAINER_ID -f
+docker logs [OPTIONS] CONTAINER  
+docker logs webserver  //to view the logs of a container named "webserver"
+docker logs CONTAINER_ID -f //If you want to see the logs as they are generated in real-time
 docker logs backend-flask -f
 docker logs $CONTAINER_ID -f
 ```
@@ -213,8 +205,8 @@ services:
       BACKEND_URL: "https://4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"
     build: ./backend-flask
     ports:
-      - "4567:4567"
-    volumes:
+      - "4567:4567" //we can change the port 
+    volumes:   //it is container directory that we gonna map
       - ./backend-flask:/backend-flask
   frontend-react-js:
     environment:
