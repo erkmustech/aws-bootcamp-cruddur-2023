@@ -206,7 +206,7 @@ services:
     build: ./backend-flask
     ports:
       - "4567:4567" //we can change the port 
-    volumes:   //it is container directory that we gonna map
+    volumes:   #it is container directory that we gonna map
       - ./backend-flask:/backend-flask
   frontend-react-js:
     environment:
