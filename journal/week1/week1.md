@@ -11,7 +11,7 @@ Containerization is a way of packaging software code along with all its dependen
   7. Create PostGress 
 
 
-### As the appicaion backend was develped with Python we should run python 
+### As the application develped with Python(backend) we should run python 
    "python3 -m flask run --host=0.0.0.0 --port=4567"
           ```sh
           cd backend-flask
