@@ -44,7 +44,7 @@
         ENTRYPOINT FLASK_APP=/opt/source-code/app.py flask run
 ```
 
-![docker build leyer](./_docs/assets/built_leyer.jpg)]
+![docker build leyer](_docs/assets/built_leyer.jpg)
 ## run docker file 
 ```sh
     docker build Dockerfile –t erkmustech/my-app
