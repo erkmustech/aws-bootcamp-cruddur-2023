@@ -8,12 +8,13 @@
   4.  Into docker image -> [docker run -i <imagename>]
 
   ### run – Volume mapping 
-   ```sh
+    ```sh
       docker run mysql
       docker stop mysql
       docker rm mysql
        docker run –v /opt/datadir:/var/lib/mysql mysql
     ```
+  
   ### inspect docker 
     ```sh  
     docker inspect blissful_hopper
@@ -34,7 +35,7 @@
     6. spesify the entrypoint and run the webserver using "flask"command
 
     ## docker file
-        ```dockerfile
+    ```dockerfile
         FROM Ubuntu
         RUN apt-get update
         RUN apt-get install python
@@ -42,7 +43,7 @@
         RUN pip install flask-mysql
         COPY . /opt/source-code
         ENTRYPOINT FLASK_APP=/opt/source-code/app.py flask run
-        ```
+    ```
 
         ![docker build leyer](./_docs/assets/built_leyer.jpg)]
     ## run docker file 
