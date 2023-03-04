@@ -1,4 +1,5 @@
-# Week 3 — Decentralized Authentication
+# Week 3 — Decentralized Authentication - (AWS Cognito)
+Decentralized identity solutions are used for identity management and verification. We use AWS congnito for decentralized authentication today. 
 
 ## Install AWS Amplify
 
