@@ -142,7 +142,7 @@ aws budgets create-budget \
 
 ## Create an AWS Budget by Terraform
 
-``` json
+``` sh
 provider "aws" {
   version = "2.70.0"
   region  = "us-west-2"
@@ -176,6 +176,7 @@ resource "aws_cloudwatch_metric_alarm" "billing_metric_alarm" {
   alarm_actions       = [aws_sns_topic.billing_alarm.arn]
 }
 ```
+
 ## Creating an EventBridge rule for AWS Health  by CLI
  1. Creating an EventBridge rule for AWS Health  (eventbridg)["https://console.aws.amazon.com/events/."]
  2. For a new or existing rule 
