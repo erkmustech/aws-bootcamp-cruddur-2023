@@ -21,13 +21,17 @@
 
 # solutions
 # 1 for using gitpod we have to install aws cli and configrize. Used cli commands 
+```sh
     1. curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
     2. sudo ./aws/install
     3. unzip awscliv2.zip
-    4. sudo ./aws/install
-    1. aws sts get-user-id
-    2. aws get-account-information
-    3. aws account get-contact-information
+    5. sudo ./aws/install
+    6. aws sts get-user-id
+    7. aws get-account-information
+    8. aws account get-contact-information
+    9. aws sts get-caller-identity
+```
+
 
 ## update gitpod.yml file 
 ``` yml
