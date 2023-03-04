@@ -146,7 +146,7 @@ aws budgets create-budget \
 
 ## Create an AWS Budget by Terraform
 
-``` json
+``` sh
 provider "aws" {
   version = "2.70.0"
   region  = "us-west-2"
@@ -237,7 +237,7 @@ You can receive AWS Health events directly in your chat clients, such as Slack a
 ``` 
 
 ## health alert by Terraform 
-``` json
+``` sh
 resource "aws_sns_topic" "health_alert_topic" {
   name = "health-alert-topic"
 }
