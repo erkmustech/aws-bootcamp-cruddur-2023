@@ -236,3 +236,95 @@
     The C4 model was created as a way to help software development teams describe and communicate software architecture, both during up-front design sessions and when retrospectively documenting an existing codebase. It's a way to create maps of your code, at various levels of detail, in the same way you would use something like Google Maps to zoom in and out of an area you are interested in.
 
     The C4 model is an "abstraction-first" approach to diagramming software architecture, based upon abstractions that reflect how software architects and developers think about and build software. The small set of abstractions and diagram types makes the C4 model easy to learn and use. Please note that you don't need to use all 4 levels of diagram; only those that add value - the System Context and Container diagrams are sufficient for many software development teams.      
+
+
+# install aws cli 
+1. curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+2. sudo ./aws/install
+3. unzip awscliv2.zip
+4. sudo ./aws/install
+
+
+# some useful aws-shell commdans 
+1. aws sts get-user-id
+2. aws get-account-information
+3. aws account get-contact-information
+
+# terraform code 
+//provide block 
+
+```terraform 
+provider "aws" {
+  version = "2.70.0"
+  region  = "us-west-2"
+}
+
+
+//resource block  for billing alarm 
+
+resource "aws_sns_topic" "billing_alarm" {
+  name = "billing-alarm"
+}
+
+
+resource "aws_cloudwatch_metric_filter" "billing_metric_filter" {
+  name           = "billing-metric-filter"
+  pattern        = "{ ($.eventType = 'AWS Usage Report') && ($.usageType = 'DataTransfer-Out-Bytes') }"
+  log_group_name = "/aws/billing/ice"
+  
+  metric_transformation {
+    name      = "BillingMetric"
+    namespace = "AWS/Billing"
+    value     = "1"
+  }
+}
+
+
+resource "aws_cloudwatch_metric_alarm" "billing_metric_alarm" {
+  alarm_name          = "billing-alarm"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = "1"
+  metric_name         = "BillingMetric"
+  namespace           = "AWS/Billing"
+  period              = "21600" # 6 hours
+  statistic           = "Sum"
+  threshold           = "100.0" # $100 USD
+  alarm_description   = "Billing Alarm for Total Estimated Charge >= $100 USD"
+  alarm_actions       = [aws_sns_topic.billing_alarm.arn]
+}
+
+// resource block for health alarming
+resource "aws_sns_topic" "health_alert_topic" {
+  name = "health-alert-topic"
+}
+
+resource "aws_cloudwatch_alarm" "health_alarm" {
+  alarm_name          = "health-alarm"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = "1"
+  metric_name         = "ServiceHealth"
+  namespace           = "AWS/Health"
+  period              = "60"
+  statistic           = "SampleCount"
+  threshold           = "1"
+  alarm_description   = "This metric checks for AWS service health issues."
+  alarm_actions       = [aws_sns_topic.health_alert_topic.arn]
+}
+
+resource "aws_sns_topic_subscription" "health_alert_subscription" {
+  topic_arn = aws_sns_topic.health_alert_topic.arn
+  protocol  = "email"
+  endpoint  = "you@example.com"
+}
+
+```
+
+
+
+
+
+
+
+
+
+
