@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "aws": "^0.0.3-2",
+    "aws-amplify": "^5.0.16",
+    "aws-cli": "^0.0.2"
+  }
+}

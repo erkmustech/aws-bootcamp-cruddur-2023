@@ -1,7 +1,8 @@
 # Week 3 — Decentralized Authentication - (AWS Cognito)
 Decentralized identity solutions are used for identity management and verification. We use AWS congnito for decentralized authentication today. 
 
-## Install AWS Amplify
+## login your AWS account 
+### Install AWS Amplify
 
 ```sh
 npm i aws-amplify --save
@@ -353,3 +354,5 @@ Add in the `HomeFeedPage.js` a header eto pass along the access token
     Authorization: `Bearer ${localStorage.getItem("access_token")}`
   }
 ```
+
+
