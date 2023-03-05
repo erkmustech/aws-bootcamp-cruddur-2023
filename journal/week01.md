@@ -1,5 +1,48 @@
 # Docker 
-  Docker is vertulization of the OS
+  Docker is virtualization of the OS like EC2 is virtualization of the server.
+
+### install python, flask  and crete database 
+  1. install pythong 
+     ``` sh
+     brew install python
+    ```
+  2.  install pip 
+    ``` sh
+    curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+    sudo python get-pip.py
+    pip --version //check if it is installedd
+    ```
+  3. seperate the python project from local evn we install pythong virtualevn
+    ``` sh
+      pip install virtualenv
+      virtualenv --python=python3 myenv
+      source myenv/bin/activate
+      cd virtualenv
+    ```   
+  4.  install `flask` framework to pythonevn directory
+     ``` sh
+     pip install flask
+     ```
+  5. create database scheme 
+    ``` sh
+    vi schema.sql
+    ```
+  6. edit the database table 
+   ``` sh
+   drop table if exists posts;
+        create table posts (
+            id integer primary key autoincrement,
+            name text not null,
+            content text not null
+        );
+    ```
+  7. create sqllite3 to generate sql database file  
+    ``` sh
+    sqlite3 database.db < schema.sql
+    ```
+  8. create aap.py file and game started :)
+
+  
 
 ## common docker commands
   1.  run docker ->   [ docker run redis ]
