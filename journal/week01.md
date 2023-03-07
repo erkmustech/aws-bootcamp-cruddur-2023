@@ -1,60 +1,31 @@
 # Docker 
   Docker is virtualization of the OS like EC2 which is virtualization of the server.
 
-## install python, flask  and crete database 
-  1. install python 
-     ``` sh
-     brew install python
-    ```
-  2.  install pip 
-    ``` sh
+## install prerequested dependencies (python, flask  and crete database )
+  ``` sh
+    brew install python    
     curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
     sudo python get-pip.py
-    pip --version
-    ```
-  3. seperate the python project from local evn we install pythong virtualevn
-    ``` sh
-      pip install virtualenv
-      virtualenv --python=python3 myenv
-      source myenv/bin/activate
-      cd virtualenv
-    ```   
-  4.  install `flask` framework to pythonevn directory
-     ``` sh
-     pip install flask
-     ```
-
-## common docker commands
-  1.  run docker ->   [ docker run redis ]
-  2.  Tegging - > [ docker run redis:4.0 ]
-  3.  Port mapping- > [ docker run -p <38282:8080>  <webapp>:<tagname> ] 
-  4.  Into docker image -> [docker run -i <imagename>]
-  5. run – Volume mapping 
-    ```sh
-        docker run mysql
-        docker stop mysql
-        docker rm mysql
-        docker run –v /opt/datadir:/var/lib/mysql mysql
-    ```
-  6. inspect docker 
-    ```sh  
-        docker inspect blissful_hopper
-    ```
-  7. container logs
-    ```sh
-        Container Logs
-    ```
-  8.  run docker file 
-    ```sh
-        docker build Dockerfile –t erkmustech/my-app
-        docker push erkmustech/my-app
-    ```  
-  9. Delete an Image
-    ```sh
-        docker image rm backend-flask --force
-        docker rmi backend-flask is the legacy syntax
-    ``` 
-        
+  ```
+## seperate the python project from local evn we install pythong virtualevn
+  ``` sh
+    pip install virtualenv
+    virtualenv --python=python3 myenv
+    source myenv/bin/activate
+    cd virtualenv
+    pip install flask
+  ```   
+## docker commands
+  1.  create docker ->  `docker build Dockerfile –t erkmustech/my-app`
+  2.  run docker ->  `docker run`
+  2.  Tegging - > `docker run redis:4.0`
+  3.  Port mapping- > `docker run -p <38282:8080>  <webapp>:<tagname>`
+  4.  Into docker image -> `docker run -i <imagename>`
+  5.  run – Volume mapping-> `docker run –v /opt/datadir:/var/lib/mysql mysql`
+  6.  inspect docker -> `docker inspect blissful_hopper`
+  7.  container logs -> `Container Logs`
+  9.  Delete an Image-> `docker image rm backend-flask --force`
+    
 ## Containerize BackEnd 
  ### run python
     ```sh 
