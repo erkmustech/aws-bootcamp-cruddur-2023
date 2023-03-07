@@ -2,19 +2,19 @@
   Docker is virtualization of the OS like EC2 which is virtualization of the server.
 
 ## install prerequested dependencies (python, flask  and crete database )
-  ``` sh
-    brew install python    
-    curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-    sudo python get-pip.py
-  ```
+``` sh
+brew install python    
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+sudo python get-pip.py
+```
 ## seperate the python project from local evn we install pythong virtualevn
-  ``` sh
-    pip install virtualenv
-    virtualenv --python=python3 myenv
-    source myenv/bin/activate
-    cd virtualenv
-    pip install flask
-  ```   
+``` sh
+pip install virtualenv
+virtualenv --python=python3 myenv
+source myenv/bin/activate
+cd virtualenv
+pip install flask
+```   
 ## docker commands
   1.  create docker ->  `docker build Dockerfile –t erkmustech/my-app`
   2.  run docker ->  `docker run`
@@ -27,7 +27,7 @@
   9.  Delete an Image-> `docker image rm backend-flask --force`
 
 ## Containerize BackEnd 
- ### run python
+### run python
 ```sh
 cd backend-flask
 export FRONTEND_URL="*"
@@ -35,46 +35,46 @@ export BACKEND_URL="*"
 python3 -m flask run --host=0.0.0.0 --port=4567
 cd ..
 ```
-
  - make sure to unlock the port on the poort tab
  - append to the url '/api/activities/home' 
 
 ## create docker file
-```dockerfile
-        FROM python:3.10-slim-buster 
-        WORKDIR /backend-flask
-        COPY requirements.txt requirements.txt
-        RUN pip3 install -r requirements.txt
-        COPY . .
-        ENV FLASK_ENV=development
-        EXPOSE ${PORT}
-        CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0", "--port=4567"]
+``` dockerfile
+FROM python:3.10-slim-buster 
+WORKDIR /backend-flask
+COPY requirements.txt requirements.txt
+RUN pip3 install -r requirements.txt
+COPY . .
+ENV FLASK_ENV=development
+EXPOSE ${PORT}
+CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0", "--port=4567"]
 ```
-<!-- 
-![docker build leyer](_docs/assets/built_leyer.jpg) -->
 ## Built Container 
  ``` sh 
  docker build -t backend-flask ./backend-flask
  ``` 
 ## Run docker container 
-  ```sh
-        docker run --rm -p 4567:4567 -it backend-flask
-        FRONTEND_URL="*" BACKEND_URL="*" 
-        docker run --rm -p 4567:4567 -it backend-flask
-        export FRONTEND_URL="*"
-        export BACKEND_URL="*"
-        docker run --rm -p 4567:4567 -it -e FRONTEND_URL='*' -e BACKEND_URL='*' backend-flask
-        docker run --rm -p 4567:4567 -it  -e FRONTEND_URL -e BACKEND_URL backend-flask
-        unset FRONTEND_URL="*"
-        unset BACKEND_URL="*"
+  ``` dockerfile
+docker run --rm -p 4567:4567 -it -e FRONTEND_URL='*' -e BACKEND_URL='*' backend-flask
+export FRONTEND_URL="*"
+unset BACKEND_URL="*"
   ``` 
+
+## Run in background
+```sh
+docker container run --rm -p 4567:4567 -d backend-flask
+```
+## Return the container id into an Env Vat
+``` sh
+CONTAINER_ID=$(docker run --rm -p 4567:4567 -d backend-flask)
+```
 
 ## Send Curl to Test Server
 ``` sh
 curl -X GET http://localhost:4567/api/activities/home -H "Accept: application/json" -H "Content-Type: application/json"
 ``` 
-### Check Container Logs
-```sh
+## Check Container Logs
+```dockerfile
 docker logs [OPTIONS] CONTAINER  
 docker logs webserver  //to view the logs of a container named "webserver"
 docker logs CONTAINER_ID -f //If you want to see the logs as they are generated in real-time
@@ -82,11 +82,11 @@ docker logs backend-flask -f
 docker logs $CONTAINER_ID -f
 ``` 
 
-### Debugging adjacent containers with other containers
+## Debugging adjacent containers with other containers
 ```sh
 docker run --rm -it curlimages/curl "-X GET http://localhost:4567/api/activities/home -H \"Accept: application/json\" -H \"Content-Type: application/json\""
 ``` 
-#### busybosy is often used for debugging since it install a bunch of thing
+## busybosy is often used for debugging since it install a bunch of thing
 ``` sh
 docker run --rm -it busybosy
 Gain Access to a Container
@@ -94,28 +94,34 @@ docker exec CONTAINER_ID -it /bin/bash
 ``` 
 You can just right click a container and see logs in VSCode with Docker extension
 
+## Gain Access to a Container
+``` sh 
+docker exec CONTAINER_ID -it /bin/bash
+``` 
 
 ## Overriding Ports
-```sh
+``` sh
 FLASK_ENV=production PORT=8080 docker run -p 4567:4567 -it backend-flask
 ``` 
 Look at Dockerfile to see how ${PORT} is interpolated
 
-# Containerize Frontend
-```sh
-Run NPM Install
-We have to run NPM Install before building the container since it needs to copy the contents of node_modules
-
-cd frontend-react-js
-npm i
+## Delete an Image
+``` sh 
+docker image rm backend-flask --force
 ``` 
+
+# Containerize Frontend
+## install NPM 
+``` sh
+cd frontend-react-js
+NPM install
+```
 
 ## Create Docker File for frontEnd
 Create a file here: frontend-react-js/Dockerfile
 ```sh
 FROM node:16.18
 ENV PORT=3000
-
 COPY . /frontend-react-js
 WORKDIR /frontend-react-js
 RUN npm install
@@ -126,50 +132,24 @@ CMD ["npm", "start"]
 ## Build Container
 ```sh
 docker build -t frontend-react-js ./frontend-react-js
-Run Container
+```
+
+## Run Container
+```sh
 docker run -p 3000:3000 -d frontend-react-js
 ```
-## Multiple Containers by Create a docker-compose file
-Create docker-compose.yml at the root of your project.
+# Multiple Containers by Create a docker-compose file
+## Create `docker-compose.yml` at the root of your project.
+## run docker-compose fiel by clicking `compose up` or intering `docker-compose up` command into console
+## check the docker contanies by cling the docker extension in the sidebar 
+## check the port and make sure it is unlocked
+## go to browser and check the server if it works normal
 
-```yml
-version: "3.8"
-services:
-  backend-flask:
-    environment:
-      FRONTEND_URL: "https://3000-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"
-      BACKEND_URL: "https://4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"
-    build: ./backend-flask
-    ports:
-      - "4567:4567" //we can change the port 
-    volumes:   #it is container directory that we gonna map
-      - ./backend-flask:/backend-flask
-  frontend-react-js:
-    environment:
-      REACT_APP_BACKEND_URL: "https://4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"
-    build: ./frontend-react-js
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./frontend-react-js:/frontend-react-js
-networks: 
-  internal-network:
-    driver: bridge
-    name: cruddur
-    //## Adding DynamoDB Local and Postgres
-volumes:
-  db:
-    driver: local
-  ``` 
-    
-
-
-NOTES: We are going to use Postgres and DynamoDB local in future labs
-We can bring them in as containers and reference them externally
-
+NOTES: We are going to use Postgres and DynamoDB local in future labs We can bring them in as containers and reference them externally
 Lets integrate the following into our existing docker compose file:
 
-### Postgres
+# Adding DynamoDB and Postgres local
+## adding Postgres
 
 ```yaml
 services:
@@ -188,8 +168,7 @@ volumes:
     driver: local
 ```
 
-To install the postgres client into Gitpod
-
+## To install the postgres client into Gitpod
 ```sh
   - name: postgres
     init: |
@@ -217,37 +196,19 @@ services:
     working_dir: /home/dynamodblocal
 ```
 
-Example of using DynamoDB local
-https://github.com/100DaysOfCloud/challenge-dynamodb-local
-
-### Volumes
-
-directory volume mapping
+## Volumes
+### directory volume mapping
 
 ```yaml
 volumes: 
 - "./docker/dynamodb:/home/dynamodblocal/data"
 ```
 
-named volume mapping
-
+### named volume mapping
 ```yaml
 volumes: 
   - db:/var/lib/postgresql/data
-
 volumes:
   db:
     driver: local
 ```
-
-
-
-# how to create my own image
-    1. choose a image as sourse from docker-hub
-    2. update soure repo wit "apt" command
-       Update apt repo
-    3. install dependencies using "apt" command
-    4. install python dependency using "pip"command
-    5. copy source code to the location like "opt"folder
-    6. spesify the entrypoint and run the webserver using "flask"command
-
