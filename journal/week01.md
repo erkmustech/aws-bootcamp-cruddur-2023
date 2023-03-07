@@ -25,16 +25,17 @@
   6.  inspect docker -> `docker inspect blissful_hopper`
   7.  container logs -> `Container Logs`
   9.  Delete an Image-> `docker image rm backend-flask --force`
-    
+
 ## Containerize BackEnd 
  ### run python
-    ```sh 
-    cd backend-flak
-    export FRONTEND_URL="*"
-    export BACKEND_URL="*"
-    python3 -m flask run --host=0.0.0.0 --port=4567
-    cd ..
-    ```
+```sh
+cd backend-flask
+export FRONTEND_URL="*"
+export BACKEND_URL="*"
+python3 -m flask run --host=0.0.0.0 --port=4567
+cd ..
+```
+
  - make sure to unlock the port on the poort tab
  - append to the url '/api/activities/home' 
 
