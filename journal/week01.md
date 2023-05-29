@@ -1,5 +1,10 @@
-# Docker 
-  Docker is virtualization of the OS like EC2 which is virtualization of the server.
+# Container & Docker 
+Container is a sandboxed process on your machine that is isolated from all other processes on the host machine.
+Is a runnable instance of an image. You can create, start, stop, move, or delete a container using the DockerAPI or CLI.
+Can be run on local machines, virtual machines or deployed to the cloud.
+Is portable (can be run on any OS).
+Is isolated from other containers and runs its own software, binaries, and configurations.
+# Docker is virtualization of the OS like EC2 which is virtualization of the server. 
 
 ## install prerequested dependencies (python, flask  and crete database )
 ``` sh
